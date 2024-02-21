@@ -1,3 +1,5 @@
+console.log('JavaScript file loaded');
+
 document.addEventListener('DOMContentLoaded', function() {
   const form = document.querySelector('form');
   const jokeContainer = document.getElementById('jokeContainer');
