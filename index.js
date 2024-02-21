@@ -1,31 +1,32 @@
-const express = require('express');
-const axios = require('axios');
-const path = require('path');
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.querySelector('form');
+  const jokeContainer = document.getElementById('jokeContainer');
+  const errorMessage = document.getElementById('errorMessage');
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+  form.addEventListener('submit', async function(event) {
+    event.preventDefault();
+    const name = document.getElementById('name').value || 'friend';
 
-app.use(express.static(path.join(__dirname, 'public')));
-
-
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
-});
-
-
-app.get('/joke', async (req, res) => {
-    const name = req.query.name || 'friend';
     try {
-      // Fetch a random joke from JokeAPI
-      const response = await axios.get('https://v2.jokeapi.dev/joke/Any?type=single');
-      const joke = response.data.joke;
-  
-      res.json({ joke: joke, name: name });
+      const response = await fetch('https://v2.jokeapi.dev/joke/Any?type=single');
+      const data = await response.json();
+
+      if (response.ok) {
+        const joke = data.joke;
+        jokeContainer.textContent = `Hello, ${name}! Here's a joke for you: ${joke}`;
+        errorMessage.style.display = 'none';
+      } else {
+        throw new Error('Failed to fetch joke');
+      }
     } catch (error) {
       console.error('Error fetching joke:', error);
-      res.status(500).json({ message: 'Error fetching joke' });
+      errorMessage.textContent = 'Error: ' + error.message;
+      errorMessage.style.display = 'block';
+      jokeContainer.style.display = 'none';
     }
   });
+});
+
   
 
 app.listen(PORT, () => {
