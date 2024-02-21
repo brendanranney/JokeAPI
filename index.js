@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (response.ok) {
         const joke = data.joke;
         jokeContainer.textContent = `Hello, ${name}! Here's a joke for you: ${joke}`;
-        jokeContainer.style.display = 'block'; 
+        jokeContainer.style.display = 'block';
         errorMessage.style.display = 'none'; 
       } else {
         throw new Error('Failed to fetch joke');
@@ -29,4 +29,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
+
 
