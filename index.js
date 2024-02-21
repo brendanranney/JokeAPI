@@ -1,8 +1,7 @@
 console.log('JavaScript file loaded');
 
 document.addEventListener('DOMContentLoaded', function() {
-  console.log('DOM content loaded');
-  const form = document.querySelector('form');
+  const form = document.querySelector('#jokeForm');
   const jokeContainer = document.getElementById('jokeContainer');
   const errorMessage = document.getElementById('errorMessage');
 
@@ -17,7 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
       if (response.ok) {
         const joke = data.joke;
         jokeContainer.textContent = `Hello, ${name}! Here's a joke for you: ${joke}`;
-        errorMessage.style.display = 'none';
+        jokeContainer.style.display = 'block'; // Ensure the joke container is visible
+        errorMessage.style.display = 'none'; // Hide the error message if it was displayed previously
       } else {
         throw new Error('Failed to fetch joke');
       }
@@ -25,7 +25,8 @@ document.addEventListener('DOMContentLoaded', function() {
       console.error('Error fetching joke:', error);
       errorMessage.textContent = 'Error: ' + error.message;
       errorMessage.style.display = 'block';
-      jokeContainer.style.display = 'none';
+      jokeContainer.style.display = 'none'; // Hide the joke container if an error occurred
     }
   });
 });
+
